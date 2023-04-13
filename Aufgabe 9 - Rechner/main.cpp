@@ -13,7 +13,7 @@ using namespace std;
 void rechner() {
     int num1, num2, sum,
         modulo = 0;
-    char opr;
+    char op;
 
     cout << "Gib eine Zahl ein: " ;
     cin >> num1;
@@ -24,10 +24,10 @@ void rechner() {
     cinclear;
 
     cout << "Gib eine Operator(+, -, *, /) an: ";
-    cin >> opr;
+    cin >> op;
     cinclear;
 
-    switch(opr) {
+    switch(op) {
         case '+':
             sum = num1 + num2;
             break;
@@ -38,20 +38,26 @@ void rechner() {
             sum = num1 * num2;
             break;
         case '/':
+            if(num2 == 0) {
+                cout << "Fehler: Nicht durch 0 Teilbar" << endl2;
+                return;
+            }
+
             sum = num1 / num2;
             modulo = num1 % num2;
             break;
         default:
-            cout << "Fehler: " << opr << " ist kein Operator" << endl2;
+            cout << "Fehler: " << op << " ist kein Operator" << endl2;
             return;
     }
 
-    cout << endl2 << "Berechne: " << num1 << " " << opr << " " << num2 << " = " << sum;
+    cout << endl2 << "Berechne: " << num1 << " " << op << " " << num2 << " = " << sum;
     if(modulo > 0) {
         cout << " rest " << modulo;
     }
     cout << endl2;
 }
+
 int main() {
     cout << "Grundrechenprogramm v1.0" << endl;
     cout << "Programm mit 4 Grundrechenarten (+, -, *, /)" << endl2;
