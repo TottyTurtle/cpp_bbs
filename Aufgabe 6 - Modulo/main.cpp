@@ -33,7 +33,14 @@ newinput:
     return value;
 }
 
-void rechner() {
+
+
+int main() {
+    system("chcp 65001 > nul"); //UTF-8 support
+
+    cout << "Rechner v1.0" << endl;
+    cout << "Programm die drei Vorgänger und die drei Nachfolger berechnet" << endl << endl;
+
     int value = getInput("Geben Sie eine Zahl ein, zu der Vorgänger und Nachfolger berechnet werden soll: ");
 
     cout << endl;
@@ -47,17 +54,6 @@ void rechner() {
 
         cout << text << "\t" << sum << endl;
     }
-}
 
-int main() {
-    system("chcp 65001 > nul"); //UTF-8 support
-
-    cout << "Rechner v1.0" << endl;
-    cout << "Programm die drei Vorgänger und die drei Nachfolger berechnet" << endl << endl;
-
-    while(true) { // Unendliche Wiederholungen
-        rechner();
-        cout << endl << endl << string(60, '_') << endl << endl;
-    }
 
 }
