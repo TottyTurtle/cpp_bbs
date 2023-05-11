@@ -1,0 +1,39 @@
+1
+1
+Text ausgeben
+1
+"Welche Breite soll das Quadrat haben?"
+1
+1
+Zahl einlesen
+1
+int value
+7
+0
+1
+int x = 0 ; x < value ; x++
+0
+0
+0
+0
+7
+0
+1
+int y = 0 ; y < value ; y++
+0
+0
+0
+0
+1
+1
+Text ausgeben
+1
+"*"
+11
+1
+1
+Neue Zeile
+1
+newline
+11
+11
