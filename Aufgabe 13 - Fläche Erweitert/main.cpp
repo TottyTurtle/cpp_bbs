@@ -1,11 +1,20 @@
 #include <iostream>
 
-#define pii 3,14156
+#define pii 3.14156
 
 using namespace std;
 
+scope(float radius) {
+    radius = pii * radius * 2;
+    cout << endl << "Umfang: " << radius << endl << endl;
+}
+
+area(float radius) {
+    radius = pii * radius * radius;
+    cout << endl << "Fläche: " << radius << endl << endl;
+}
 menu() {
-    cout << "--- Menu ---" << endl << endl;
+ cout << "--- Menu ---" << endl << endl;
 
     cout << "1. Berechnung des Umfangs" << endl;
     cout << "2. Berechnung der Fläche" << endl;
@@ -26,12 +35,10 @@ menu() {
 
     switch(num) {
         case 1:
-            radius = pii * radius * 2;
-            cout << endl << "Umfang: " << radius << endl << endl;
+            scope(radius);
             break;
         case 2:
-            radius = pii * radius * radius;
-            cout << endl << "Fläche: " << radius << endl << endl;
+            area(radius);
             break;
     }
 }
