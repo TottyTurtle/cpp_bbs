@@ -1,26 +1,26 @@
 #include <iostream>
+#include<windows.h>
 
 using namespace std;
 
 int sum = 15;
 int difficult = 1;
 
-
-int npc() {
-    cout << string(22, '_');
-    cout << "PC nimmst " << 2 << " Hölzchen." << endl;
-    sum -= 2;
-    cout << endl<< "Es sind noch " << sum << " im Spiel." << endl;
-}
-
-int player() {
-    cout << string(22, '_');
-    cout << endl<< "Wie viele willst du nehmen?" << endl;
+int play(bool isplayer) {
     int bet;
-    cin >> bet;
-    cout << "Du nimmst " << bet << " Hölzchen." << endl;
+    if(isplayer) {
+        cout << "Wie viele willst du nehmen?" << endl;
+
+        cin >> bet;
+        cout << "Du nimmst " << bet << " Hölzchen." << endl;
+    } else {
+        cout << "PC nimmt " << 2 << " Hölzchen." << endl;
+        bet = 2;
+        sleep(2);
+    }
     sum -= bet;
-    cout << "Es sind noch " << sum << " im Spiel." << endl;
+
+    cout << endl << sum << " Hölzchen sind noch im Spiel." << endl;
 }
 
 int main() {
@@ -39,10 +39,10 @@ int main() {
     cin >> difficult;
 
     cout << "15 Hölzchen sind noch im Spiel." << endl;
-
+    bool isplayer = false;
     while(true) {
-        player();
-        npc();
+        isplayer = !isplayer;
+        play(isplayer);
     }
 
 }
