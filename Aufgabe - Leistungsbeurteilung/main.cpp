@@ -9,6 +9,7 @@
 #include <vector>
 #include <regex>
 #include <dirent.h>
+#include <fstream>
 
 #include "include/nlohmann/json.hpp"
 

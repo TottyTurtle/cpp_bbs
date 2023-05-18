@@ -5,6 +5,7 @@ struct Menu {
         ,menusize = 0;
 
     string key;
+    int id;
 
     void init() {
         menu_num = 0;
@@ -30,6 +31,13 @@ struct Menu {
     string getKey() {
         return key;
     }
+    string getID() {
+        return key;
+    }
+    string getValue() {
+        return map_value[id];
+    }
+
 
     int show(string text) {
         system("cls");
@@ -39,6 +47,7 @@ struct Menu {
             if(menu_num == num) {
                 cout << "[X]" << it->second << endl;
                 key = map_key.at(num);
+                id = num;
             } else {
                 cout << "[ ]" << it->second << endl;
             }

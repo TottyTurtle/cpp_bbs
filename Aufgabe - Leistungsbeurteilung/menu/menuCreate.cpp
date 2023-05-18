@@ -9,19 +9,40 @@ init_menuCreate() {
     menu_create.add("save", "Speichern & Exportieren");
 }
 
+void editItem(Menu menu_request) {
+    json jfile = exam.getJson();
+    cout << "Edit: "<< menu_request.getValue() << endl;
+    string text;
+    getline(cin, text);
+    for (auto& [rkey, req] : jfile["request"].items()) {
+        if(menu_request.getKey() == rkey) {
+            exam.editRequest(stoi(rkey), text);
+            break;
+        }
+        if(req["type"] == "text") {
+            continue;
+        }
+        for (auto& [rans, ans] : req["answer"].items()) {
+            if(menu_request.getKey() == (rkey + "_" + rans)) {
+                exam.editAnswer(stoi(rkey), stoi(rans), text);
+                break;
+            }
+        }
+    }
+}
 void editRequest() {
     Menu menu_request;
     json jfile = exam.getJson();
     for (auto& [rkey, req] : jfile["request"].items()) {
         int ikey = stoi(rkey) + 1;
 
-        menu_request.add("1", exam.getTypeFrom(req["type"].dump()) + ": " + req["request"].dump());
+        menu_request.add(rkey, exam.getTypeFrom(req["type"].dump()) + ": " + req["request"].dump());
         if(req["type"] == "text") {
             continue;
         }
         for (auto& [rans, ans] : req["answer"].items()) {
         int ians = stoi(rans) + 1;
-            menu_request.add("1", "- " + ans.dump());
+            menu_request.add(rkey + "_" + rans, "- " + ans.dump());
         }
     }
     menu_request.show("Editieren: ");
@@ -35,7 +56,8 @@ void editRequest() {
         } else if(key == 80) {
             menu_request.change(1);
         } else if(key == 13) {
-
+            editItem(menu_request);
+            return;
         }
         menu_request.show("Editieren: ");
     }
@@ -49,6 +71,10 @@ void editRequest() {
 int enterCreateMenu() {
     if(menu_create.getKey() == "save") {
         exam.save();
+        string filename = TEXT("page/" + regex_replace(exam.getData(), regex(".json"), "") + ".html");
+        copyFile( TEXT("template.html"), filename);
+
+        prependStringToFile(filename, "<script type=\"text/javascript\">var jsonData = '" + exam.getJson().dump() + "'; </script>");
         return 1;
     }
     if(menu_create.getKey() == "edit") {
