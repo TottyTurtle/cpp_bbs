@@ -1,10 +1,10 @@
-<script type="text/javascript">var jsonData = '{"request":[{"answer":["Char","String","Integer"],"request":"Was ist +","type":"single"}],"title":"C++ Programmierung"}'; </script><div class="formbold-main-wrapper">
+<script type="text/javascript">var jsonData = '{"request":[{"answer":["Himmel","Gras","Stein"],"request":"Was ist Blau?","type":"single"},{"answer":["Sonne","Erde","Würfel"],"request":"Was ist Rund?","type":"multiple"},{"request":"Was ist aus Wasser?","type":"text"}],"title":"MasterTest"}'; </script><div class="formbold-main-wrapper">
 	<!-- Author: FormBold Team -->
 	<!-- Learn More: https://formbold.com -->
 	<div class="formbold-form-wrapper">
 	  <img src="">
 	  <h1 id="title">Test</h1><br>
-	  <form action="https://formbold.com/s/FORM_ID" method="POST">
+	  <form action="https://jentzsch.dev/bbs/mail.php?key=HUOTTg86g8h974gh9H97t" method="POST">
 		<div id="content">
 			<div class="formbold-input-group">
 			<label for="name" class="formbold-form-label"> Name </label>
@@ -30,7 +30,7 @@
 	
 			
 		</div>
-		<button class="formbold-btn">Submit</button>
+		<button class="formbold-btn">Abschicken</button>
 	  </form>
 	</div>
   </div>
@@ -52,20 +52,20 @@
 				var inn = "";
 				for (const eanswer of erequest.answer) {
 
-					inn +='<div class="formbold-radio-group"><label class="formbold-radio-label"><input class="formbold-input-radio" type="radio" name="' + id + '"	id="' + id + '"/>' + eanswer + '<span class="formbold-radio-checkmark"></span></label></div>';
+					inn +='<div class="formbold-radio-group"><label class="formbold-radio-label"><input class="formbold-input-radio" type="radio" name="' + id + ')_' + question + '[]" value="' + eanswer + '" id="' + id + '"/>' + eanswer + '<span class="formbold-radio-checkmark"></span></label></div>';
 				}
-				content.innerHTML += '<br><div class="formbold-input-radio-wrapper"><label for="'+ id + '" class="formbold-form-label">' + question + '</label><div class="formbold-radio-flex">' + inn + '</div></div>';
+				content.innerHTML += '<br><div class="formbold-input-radio-wrapper"><label for="'+ id + '" class="formbold-form-label">' + question + '<span class="oant" style="font-size: 11px;font-style: italic;"> *Eine Antwort Richtig</span></label><div class="formbold-radio-flex">' + inn + '</div></div>';
 				continue;
 			}else if(type == "multiple") {
 				var inn = "";
 				for (const eanswer of erequest.answer) {
 
-					inn +='<div class="formbold-radio-group"><label class="formbold-radio-label"><input class="formbold-input-radio" type="checkbox" name="' + id + '"	id="' + id + '"/>' + eanswer + '<span class="formbold-radio-checkmark"></span></label></div>';
+					inn +='<div class="formbold-radio-group"><label class="formbold-radio-label"><input class="formbold-input-radio" type="checkbox" name="' + id + ')_' + question + '[]" value="' + eanswer + '" id="' + id + '"/>' + eanswer + '<span class="formbold-radio-checkmark"></span></label></div>';
 				}
-				content.innerHTML += '<br><div class="formbold-input-radio-wrapper"><label for="'+ id + '" class="formbold-form-label">' + question + '</label><div class="formbold-radio-flex">' + inn + '</div></div>';
+				content.innerHTML += '<br><div class="formbold-input-radio-wrapper"><label for="'+ id + '" class="formbold-form-label">' + question + '<span class="oant" style="font-size: 11px;font-style: italic;"> *Mehrere Antworten Richtig</span></label><div class="formbold-radio-flex">' + inn + '</div></div>';
 				continue;
 			} else if(type == "text") {
-				content.innerHTML += ('<br><div>\<label for="message" class="formbold-form-label">' + question + '</label><textarea rows="6"name="message"id="message"placeholder="Type here..."class="formbold-form-input"></textarea></div>');
+				content.innerHTML += ('<br><div>\<label for="message" class="formbold-form-label">' + question + '</label><textarea rows="6"name="' + id + ')_' + question + '"id="message"placeholder="..."class="formbold-form-input"></textarea></div>');
 				continue;
 			}
 		}

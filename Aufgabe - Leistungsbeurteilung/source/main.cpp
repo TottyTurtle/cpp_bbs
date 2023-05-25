@@ -10,6 +10,7 @@
 #include <regex>
 #include <dirent.h>
 #include <fstream>
+#include <locale>
 
 #include "include/nlohmann/json.hpp"
 
@@ -21,7 +22,6 @@ using json = nlohmann::json;
 #include "classes/exam.class.cpp"
 #include "menu/menuCreate.cpp"
 
-#define cmd(var) var()
 
 Menu menu;
 void initMenu() {
@@ -69,7 +69,6 @@ void menuLoad() {
         }
 
         loadmenu.show("Wähle eines dieser Punkte aus:");
-        cout << key << endl;
     }
 }
 
@@ -85,8 +84,20 @@ void enterMenu() {
 
 int main() {
     system("chcp 65001 > nul");
+    setlocale(LC_ALL, "C.UTF-8");
+    locale::global(locale(""));
+
+    cout << " _        _    _                     _           _           _ _     " << endl;
+    cout << "| |   ___(_)__| |_ _  _ _ _  __ _ __| |_____ _ _| |_ _ _ ___| | |___ " << endl;
+    cout << "| |__/ -_) (_-<  _| || | ' \\/ _` (_-< / / _ \\ ' \\  _| '_/ _ \\ | / -_)" << endl;
+    cout << "|____\\___|_/__/\\__|\\_,_|_||_\\__, /__/_\\_\\___/_||_\\__|_| \\___/_|_\\___|" << endl;
+    cout << "         Version 1.0        |___/       by Pierre Jentzsch" << endl;
+    cout << endl << "Navigiere mit ↑, ↓, Enter, ESC"<< endl << endl;
+
+    system("pause");
+
     initMenu();
-    menu.show("Wähle eines dieser Punkte aus:");
+    menu.show("Hauptmenu \n\nWähle eines dieser Punkte aus:");
 
     while(true) {
         int key = getKey();
@@ -100,8 +111,7 @@ int main() {
             enterMenu();
         }
 
-        menu.show("Wähle eines dieser Punkte aus:");
-        //cout << key << endl;
+        menu.show("Hauptmenu \n\nWähle eines dieser Punkte aus:");
     }
 
 }

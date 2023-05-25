@@ -124,7 +124,9 @@ void menuCreate(string file) {
         //cin.clear();
         //cin.ignore(200, '\n');
         getline(cin, name);
-
+        name = replace(name, "ä", "aa");
+        name = replace(name, "ö", "oo");
+        name = replace(name, "ü", "uu");
         exam.setTitle(name);
     }
 
