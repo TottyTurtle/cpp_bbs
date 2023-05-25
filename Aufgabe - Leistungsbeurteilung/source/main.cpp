@@ -62,8 +62,6 @@ void menuLoad() {
         } else if(key == 72) {
             loadmenu.change(-1);
         } else if(key == 80) {
-            loadmenu.change(1);
-        } else if(key == 13) {
             menuCreate(loadmenu.getKey());
             break;
         }
@@ -77,7 +75,9 @@ void enterMenu() {
         menuCreate("");
     } else if(menu.getKey() == "load") {
         menuLoad();
-    } else if(menu.getKey() == "exit") {
+    } else if(menu.getK            loadmenu.change(1);
+        } else if(key == 13) {
+ey() == "exit") {
         systemExit();
     }
 }
@@ -85,6 +85,10 @@ void enterMenu() {
 int main() {
     system("chcp 65001 > nul");
     setlocale(LC_ALL, "C.UTF-8");
+
+    SetConsoleOutputCP(1252);
+    SetConsoleCP(1252);
+
     locale::global(locale(""));
 
     cout << " _        _    _                     _           _           _ _     " << endl;
