@@ -10,22 +10,28 @@ int sum = 15,
     player = 0,
     computer = 0,
     difficult = 1;
-
+bool lastwinner = false;;
 
 int optimalMove() {
 
-    if ((sum - 1) % 4 == 0) {
-        return 1;
+    int cmove;
+    if(sum > 13) {
+        cmove = sum - 13;
+
+    } else if(sum > 9) {
+        cmove = sum - 9;
+
+    } else if(sum > 5) {
+        cmove = sum - 5;
+
+    } else {
+        cmove = sum - 1;
+
+    }
+    if(cmove > 3 || cmove < 1) {
+        cmove -= rand() % 3 + 1;
     }
 
-
-    int cmove = 0;
-    for (int i = 1; i <= 3; i++) {
-        if ((sum - i) % 4 == 0) {
-            cmove = i;
-            break;
-        }
-    }
     return cmove;
 }
 
@@ -96,9 +102,13 @@ bool checkWin(bool isplayer) {
         return false;
     }
     if(isplayer) {
+        computer += 1;
+        lastwinner = false;
         system("cls");
         gameLayout(2);
     } else {
+        player += 1;
+        lastwinner = true;
         system("cls");
         gameLayout(1);
     }
@@ -116,21 +126,31 @@ bool play(bool isplayer) {
         bet = bet > 2 ? 3 : bet;
         bet = bet < 1 ? 1 : bet;
         bet = bet >= sum ? sum : bet;
-        player += bet;
 
         msg = "Du nimmtst " + to_string(bet) + " Hölzchen.";
     } else {
         switch(difficult) {
             case 1:
                 bet = rand() % 3 + 1;
-                bet = bet >= sum ? sum : bet;
                 break;
             case 2:
+                if((rand() % 10 + 1) <= 5) {
+                    bet = rand() % 3 + 1;
+                } else {
+                    bet = optimalMove();
+                }
+                break;
             case 3:
-                bet = optimalMove();
+                if((rand() % 10 + 1) <= 1) {
+                    bet = rand() % 3 + 1;
+                } else {
+                    bet = optimalMove();
+                }
                 break;
         }
-        computer += bet;
+        bet = bet > 2 ? 3 : bet;
+        bet = bet < 1 ? 1 : bet;
+        bet = bet >= sum ? sum : bet;
         msg = "PC nimmt " + to_string(bet) + " Hölzchen.";
     }
     sum -= bet;
@@ -153,8 +173,6 @@ int main() {
 
     gameLayout(0);
 
-    cout << "Hölzchenspiel v1.0" << endl;
-    cout << "Spiel ums letzte Hölzchen" << endl << endl;
 
     cout << "Wähle eine Schwierigkeit:" << endl;
     cout << "1. Leicht    2. Normal    3. Schwer" << endl << endl;
@@ -174,7 +192,10 @@ int main() {
     while(true) {
         isplayer = !isplayer;
         if(play(isplayer)) {
-            return 1;
+            sum = 15;
+            isplayer = lastwinner;
+            system("cls");
+            gameLayout(0);
         }
     }
 
