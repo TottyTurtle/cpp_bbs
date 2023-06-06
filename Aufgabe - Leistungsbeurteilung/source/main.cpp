@@ -75,9 +75,7 @@ void enterMenu() {
         menuCreate("");
     } else if(menu.getKey() == "load") {
         menuLoad();
-    } else if(menu.getK            loadmenu.change(1);
-        } else if(key == 13) {
-ey() == "exit") {
+    } else if(menu.getKey() == "exit") {
         systemExit();
     }
 }
@@ -86,7 +84,7 @@ int main() {
     system("chcp 65001 > nul");
     setlocale(LC_ALL, "C.UTF-8");
 
-    SetConsoleOutputCP(1252);
+    //SetConsoleOutputCP(1252);
     SetConsoleCP(1252);
 
     locale::global(locale(""));

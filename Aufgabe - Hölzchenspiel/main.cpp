@@ -45,6 +45,7 @@ string numberToString(int num, string ch) {
 }
 
 void gameLayout(int type) {
+    system("cls");
 
 
     cout << "                                 Y\\     /Y" << endl;
@@ -104,12 +105,10 @@ bool checkWin(bool isplayer) {
     if(isplayer) {
         computer += 1;
         lastwinner = false;
-        system("cls");
         gameLayout(2);
     } else {
         player += 1;
         lastwinner = true;
-        system("cls");
         gameLayout(1);
     }
     system("pause");
@@ -159,7 +158,6 @@ bool play(bool isplayer) {
         return true;
     }
 
-    system("cls");
     gameLayout(0);
     cout << msg << endl;
     sleep_for(1s);
@@ -182,7 +180,6 @@ int main() {
     cin >> difficult;
 
 
-    system("cls");
     gameLayout(0);
 
     bool isplayer = false;
@@ -194,7 +191,6 @@ int main() {
         if(play(isplayer)) {
             sum = 15;
             isplayer = lastwinner;
-            system("cls");
             gameLayout(0);
         }
     }
