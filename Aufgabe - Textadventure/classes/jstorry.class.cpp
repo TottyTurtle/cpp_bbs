@@ -1,8 +1,9 @@
 class JStorry {
     private:
-        string path;
+        string id,
+               path;
         json jsonfile;
-        string id;
+        int choiseid = -1;
     public:
         JStorry(string path){
             this->path = path;
@@ -74,6 +75,11 @@ class JStorry {
         }
 
         void next() {
+            if(this->choiseid != -1) {
+                this->id = jsonfile[this->id]["choices"][to_string(this->choiseid)]["next"].get<std::string>();
+                this->choiseid = -1;
+                return;
+            }
             this->id = jsonfile[this->id]["next"].get<std::string>();
         }
 
@@ -84,6 +90,16 @@ class JStorry {
         string getChoise(string id) {
             return jsonfile[this->id]["choices"][id]["text"].get<std::string>();
         }
+
+        void setChoise(int id) {
+           this->choiseid = id;
+        }
+
+        int getChoiseSize() {
+            return jsonfile[this->id]["choices"].size();
+        }
+
+
         string getText() {
             if(jsonfile[this->id]["text"].is_null()) {
                 return "error";

@@ -16,12 +16,17 @@ using namespace std::chrono_literals;
 using json = nlohmann::json;
 
 #include "classes/jstorry.class.cpp"
+#include "classes/jcremove.class.cpp"
 
 
 int getKey() {
+newkey:
    int result = getch();
    if(result==0) {
       result = 256 + getch();
+   }
+   if(result == 224) {
+        goto newkey;
    }
    return result;
 }
@@ -48,38 +53,64 @@ int main() {
 	//cout.flush ();
 	//sleep (1);
 
+	JCRemove* jsc = new JCRemove();
 	JStorry* js = new JStorry("storry.json");
     js->setNext("START");
     js->next();
     sendMessage(js->getText(), 50);
 
-    int time = js->getText().length() * 100;
+    //int time = js->getText().length() * 100;
     while(true) {
         js->next();
-        sleep_for(chrono::milliseconds(time));
-
-
+        sleep_for(2s);
 
         cout << endl << endl;
         sendMessage(js->getText(), 50);
-        time = js->getText().length() * 100;
+        //time = js->getText().length() * 100;
 
         if(js->isChoise()) {
             sleep_for(chrono::milliseconds(100));
+
             cout << endl << endl;
+            jsc->setPoint();
+
+            int menu = 0;
+            while(true) {
+                int csize = js->getChoiseSize();
+                for(int i=0;i<csize;i++) {
+                    if(menu == i) {
+                        SetConsoleTextAttribute(hConsole, 14);//8
+                    } else {
+                        SetConsoleTextAttribute(hConsole, 8);//8
+                    }
+
+                    cout << js->getChoise(to_string(i));
+                    cout << " ";
+                }
+
+                int num = getKey();
+                jsc->removeLine();
+                if(num == 75) { //<
+                    menu = menu == 0 ? menu = (csize-1) : menu-=1;;
+
+                } else if(num == 77) { //>
+                    menu = menu == (csize-1) ? menu = 0 : menu+=1;
+
+                } else if(num == 13 || num == 32) { //Leer Enter
+                    break;
+                }
+
+            }
             SetConsoleTextAttribute(hConsole, 14);
-            cout << js->getChoise("0");
-            cout << " ";
-            SetConsoleTextAttribute(hConsole, 8);
-            cout << js->getChoise("1");
-            cout << "\r";
-            int num = getKey();
+            sendMessage(js->getChoise(to_string(menu)), 25);
+
+            js->setChoise(menu);
+
+            SetConsoleTextAttribute(hConsole, 10);
+
             continue;
         }
 
     }
-
-
-
 
 }
