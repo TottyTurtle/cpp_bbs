@@ -3,6 +3,7 @@ class JStorry {
         string id,
                path;
         json jsonfile;
+        json jsonvar;
         int choiseid = -1;
     public:
         JStorry(string path){
@@ -15,8 +16,25 @@ class JStorry {
             f.close();
 
             json jjson = json::parse(s);
+
             string nodename, next;
 
+            for (auto& [key, value] : jjson[0]["variables"].items()) {
+
+                int type = value["type"].get<std::int64_t>();
+                jsonvar[key]["type"] = type;
+                switch(type) {
+                    case 0://String
+                            jsonvar[key]["type"] = value["value"].get<std::string>();
+                        break;
+                    case 1://Int
+                            jsonvar[key]["type"] = value["value"].get<int>();
+                        break;
+                    case 2://Boolean
+                            jsonvar[key]["type"] = value["value"].get<bool>();
+                        break;
+                }
+            }
             for (auto& [i, value] : jjson[0]["nodes"].items()) {
                 next = "end";
 
@@ -46,6 +64,8 @@ class JStorry {
                         next = value["next"].get<std::string>();
                     }
                     jsonfile[nodename]["next"] = next;
+                    jsonfile[nodename]["isbox"] = value["is_box"].get<bool>();
+                    jsonfile[nodename]["character"] = value["character"];
 
                     if(!value["text"]["DE"].is_null()) {
                         jsonfile[nodename]["text"] = value["text"]["DE"].get<std::string>();
@@ -86,9 +106,17 @@ class JStorry {
         bool isChoise() {
             return jsonfile[this->id]["type"].get<std::string>() == "show_choices";
         }
+        bool isBox() {
+            return jsonfile[this->id]["isbox"].get<bool>();
+        }
 
         string getChoise(string id) {
             return jsonfile[this->id]["choices"][id]["text"].get<std::string>();
+        }
+
+        string getCharacter() {
+            string character = jsonfile[this->id]["character"][0].get<std::string>();
+            return character == "Player" ? "" : character;
         }
 
         void setChoise(int id) {

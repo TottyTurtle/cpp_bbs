@@ -18,6 +18,8 @@ using json = nlohmann::json;
 #include "classes/jstorry.class.cpp"
 #include "classes/jcremove.class.cpp"
 
+int maincolor = 6,
+    boxcolor = 12;
 
 int getKey() {
 newkey:
@@ -39,25 +41,55 @@ void sendMessage(string text, int sleep_duration) {
     }
 }
 
+string sloop(string text, int num) {
+    string rtext = "";
+    for(int i=0;i<num;i++) {
+        rtext += text;
+    }
+    return rtext;
+}
+
 int main() {
     system("chcp 65001 > nul");
     setlocale(LC_ALL, "C.UTF-8");
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, maincolor);
 
     //SetConsoleOutputCP(1252);
     SetConsoleCP(1252);
 
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 10);
+    SetConsoleTextAttribute(hConsole, 6);
+    cout << "  _____ _            __  __            _   _               _____                     _ _ _   _" << endl;
+    cout << " |_   _| |__   ___  |  \\/  | __ _ _ __| |_(_) __ _ _ __   | ____|_  ___ __   ___  __| (_) |_(_) ___  _ __  " << endl;
+    cout << "   | | | '_ \\ / _ \\ | |\\/| |/ _` | '__| __| |/ _` | '_ \\  |  _| \\ \\/ / '_ \\ / _ \\/ _` | | __| |/ _ \\| '_ \\ " << endl;
+    cout << "   | | | | | |  __/ | |  | | (_| | |  | |_| | (_| | | | | | |___ >  <| |_) |  __/ (_| | | |_| | (_) | | | |" << endl;
+    cout << "   |_| |_| |_|\\___| |_|  |_|\\__,_|_|   \\__|_|\\__,_|_| |_| |_____/_/\\_\\ .__/ \\___|\\__,_|_|\\__|_|\\___/|_| |_|" << endl;
+    cout << "                                                                     |_|" << endl;
+    cout << endl;
+    SetConsoleTextAttribute(hConsole, 14);
+    cout << "Ein Spiel von Pierre Jentzsch" << endl;
+    cout << endl;
+    sleep_for(5s);
+    system("cls");
 
-	//cout << "test:  5% x..................." << "\r";
-	//cout.flush ();
-	//sleep (1);
 
 	JCRemove* jsc = new JCRemove();
-	JStorry* js = new JStorry("storry.json");
+	JStorry* js = new JStorry("_mars.json");
     js->setNext("START");
     js->next();
-    sendMessage(js->getText(), 50);
+    if(js->isBox()) {
+        SetConsoleTextAttribute(hConsole, boxcolor);
+
+
+        int slength = js->getText().length();
+        cout << "┌─" << sloop("─", slength) << "─┐" << endl;
+        cout << "│ " << js->getText() << " │" << endl;
+        cout << "└─" << sloop("─", slength) << "─┘";
+
+        SetConsoleTextAttribute(hConsole, maincolor);
+    } else {
+        sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+    }
 
     //int time = js->getText().length() * 100;
     while(true) {
@@ -65,7 +97,19 @@ int main() {
         sleep_for(2s);
 
         cout << endl << endl;
-        sendMessage(js->getText(), 50);
+        if(js->isBox()) {
+            SetConsoleTextAttribute(hConsole, boxcolor);
+
+
+            int slength = js->getText().length();
+            cout << "┌─" << sloop("─", slength) << "─┐" << endl;
+            cout << "│ " << js->getText() << " │" << endl;
+            cout << "└─" << sloop("─", slength) << "─┘";
+
+            SetConsoleTextAttribute(hConsole, maincolor);
+        } else {
+            sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+        }
         //time = js->getText().length() * 100;
 
         if(js->isChoise()) {
@@ -106,7 +150,7 @@ int main() {
 
             js->setChoise(menu);
 
-            SetConsoleTextAttribute(hConsole, 10);
+            SetConsoleTextAttribute(hConsole, maincolor);
 
             continue;
         }
