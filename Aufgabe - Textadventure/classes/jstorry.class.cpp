@@ -115,8 +115,7 @@ class JStorry {
         }
 
         string getCharacter() {
-            string character = jsonfile[this->id]["character"][0].get<std::string>();
-            return character == "Player" ? "" : character;
+            return jsonfile[this->id]["character"][0].get<std::string>();
         }
 
         void setChoise(int id) {

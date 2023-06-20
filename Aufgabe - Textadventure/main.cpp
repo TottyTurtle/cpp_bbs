@@ -92,9 +92,13 @@ int main() {
     }
 
     //int time = js->getText().length() * 100;
+    bool skip = false;
     while(true) {
         js->next();
-        sleep_for(2s);
+        if(!skip) {
+            sleep_for(2s);
+        }
+        skip = false;
 
         cout << endl << endl;
         if(js->isBox()) {
@@ -108,26 +112,33 @@ int main() {
 
             SetConsoleTextAttribute(hConsole, maincolor);
         } else {
-            sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+            if(js->getCharacter() == "Player") {
+                SetConsoleTextAttribute(hConsole, 14);
+                sendMessage(js->getText(), 25);
+                SetConsoleTextAttribute(hConsole, maincolor);
+
+            } else {
+                sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+
+            }
         }
         //time = js->getText().length() * 100;
 
         if(js->isChoise()) {
             sleep_for(chrono::milliseconds(100));
 
-            cout << endl << endl;
             jsc->setPoint();
 
             int menu = 0;
             while(true) {
                 int csize = js->getChoiseSize();
+                cout << endl << endl;
                 for(int i=0;i<csize;i++) {
                     if(menu == i) {
                         SetConsoleTextAttribute(hConsole, 14);//8
                     } else {
                         SetConsoleTextAttribute(hConsole, 8);//8
                     }
-
                     cout << js->getChoise(to_string(i));
                     cout << " ";
                 }
@@ -145,9 +156,9 @@ int main() {
                 }
 
             }
-            SetConsoleTextAttribute(hConsole, 14);
-            sendMessage(js->getChoise(to_string(menu)), 25);
-
+            //SetConsoleTextAttribute(hConsole, 14);
+            //sendMessage(js->getChoise(to_string(menu)), 25);
+            skip = true;
             js->setChoise(menu);
 
             SetConsoleTextAttribute(hConsole, maincolor);
