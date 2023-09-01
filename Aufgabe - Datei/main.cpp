@@ -11,20 +11,20 @@ int main() {
 
     cout << "Dateiverarbeitung v1.0" << endl;
     cout << "Programm zur Erstellung von Datein" << endl << endl;
+^
+    fstream file;
+    file.open("index.html", ios::out);
 
-    fstream f;
-    f.open("index.html", ios::out);
-
-    f << "Hallo Welt" << endl << "Test1";
+    file << "Hallo Welt" << endl << "Test1";
     cout << endl << "Die Datei index.html wurde erstellt";
-    f.close();
+    file.close();
 
 
-    f.open("index.html", ios::in);
+    file.open("index.html", ios::in);
 
     string line, line2;
-    getline(f, line);
-    getline(f, line2);
+    getline(file, line);
+    getline(file, line2);
     cout << endl << line << endl << line2;
 
 }

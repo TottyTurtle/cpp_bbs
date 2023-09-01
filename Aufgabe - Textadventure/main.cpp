@@ -8,20 +8,20 @@
 #include <stdio.h>
 #include <conio.h>
 
-#include "include/nlohmann/json.hpp"
+#include "include/nlohmann/json.hpp" //Externer Include
 
 using namespace std;
 using namespace std::this_thread;
 using namespace std::chrono_literals;
 using json = nlohmann::json;
 
-#include "classes/jstorry.class.cpp"
-#include "classes/jcremove.class.cpp"
+#include "classes/jstorry.class.cpp" //Eigener Klasse Json Storry
+#include "classes/jcremove.class.cpp" //Eigene Klasse Console Manipulation
 
-int maincolor = 6,
-    boxcolor = 12;
+int maincolor = 6, //Farbe für Text
+    boxcolor = 12; //Farbe für Infobox
 
-int getKey() {
+int getKey() { //Funktion rückgabe für Tastenanschlag
 newkey:
    int result = getch();
    if(result==0) {
@@ -33,7 +33,7 @@ newkey:
    return result;
 }
 
-void sendMessage(string text, int sleep_duration) {
+void sendMessage(string text, int sleep_duration) { //Nachricht als Zeichen in einer Geschwindigkeit ausgeben
 
     for(char& c : text) {
         cout << c;
@@ -41,7 +41,7 @@ void sendMessage(string text, int sleep_duration) {
     }
 }
 
-string sloop(string text, int num) {
+string sloop(string text, int num) { //Anzahl an Sonderzeichen ausgeben
     string rtext = "";
     for(int i=0;i<num;i++) {
         rtext += text;
@@ -50,15 +50,17 @@ string sloop(string text, int num) {
 }
 
 int main() {
-    system("chcp 65001 > nul");
-    setlocale(LC_ALL, "C.UTF-8");
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, maincolor);
+    system("chcp 65001 > nul"); //UTF-8
+    setlocale(LC_ALL, "C.UTF-8"); //UTF-8
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //HANDLE für Schriftfarbe ändern
+    SetConsoleTextAttribute(hConsole, maincolor); //Schriftfarbe ändern
 
     //SetConsoleOutputCP(1252);
-    SetConsoleCP(1252);
+    SetConsoleCP(1252); //UTF-8
 
-    SetConsoleTextAttribute(hConsole, 6);
+    SetConsoleTextAttribute(hConsole, 6); //Schriftfarbe ändern
+
     cout << "  _____ _            __  __            _   _               _____                     _ _ _   _" << endl;
     cout << " |_   _| |__   ___  |  \\/  | __ _ _ __| |_(_) __ _ _ __   | ____|_  ___ __   ___  __| (_) |_(_) ___  _ __  " << endl;
     cout << "   | | | '_ \\ / _ \\ | |\\/| |/ _` | '__| __| |/ _` | '_ \\  |  _| \\ \\/ / '_ \\ / _ \\/ _` | | __| |/ _ \\| '_ \\ " << endl;
@@ -66,85 +68,95 @@ int main() {
     cout << "   |_| |_| |_|\\___| |_|  |_|\\__,_|_|   \\__|_|\\__,_|_| |_| |_____/_/\\_\\ .__/ \\___|\\__,_|_|\\__|_|\\___/|_| |_|" << endl;
     cout << "                                                                     |_|" << endl;
     cout << endl;
-    SetConsoleTextAttribute(hConsole, 14);
+
+    SetConsoleTextAttribute(hConsole, 14); //Schriftfarbe ändern
+
     cout << "Ein Spiel von Pierre Jentzsch" << endl;
     cout << endl;
-    sleep_for(5s);
-    system("cls");
+    sleep_for(5s); //Warten
+    system("cls"); //Console Leeren
 
 
-	JCRemove* jsc = new JCRemove();
-	JStorry* js = new JStorry("_mars.json");
-    js->setNext("START");
-    js->next();
-    if(js->isBox()) {
-        SetConsoleTextAttribute(hConsole, boxcolor);
+	JCRemove* jsc = new JCRemove(); //Klasse laden für Consolen Manipulation
+	JStorry* js = new JStorry("_mars.json"); //Klasse laden für Storry
 
+    js->setNext("START"); //Auf Start setzen
+    js->next(); //Nächsten Text laden
 
+    if(js->isBox()) { //Abfrage Aktueller Text eine Box ist
+        SetConsoleTextAttribute(hConsole, boxcolor); //Schriftfarbe ändern
+
+        //Box ausgeben
         int slength = js->getText().length();
         cout << "┌─" << sloop("─", slength) << "─┐" << endl;
         cout << "│ " << js->getText() << " │" << endl;
         cout << "└─" << sloop("─", slength) << "─┘";
 
-        SetConsoleTextAttribute(hConsole, maincolor);
-    } else {
-        sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+        SetConsoleTextAttribute(hConsole, maincolor); //Schriftfarbe ändern
+
+    } else { //Wenn keine Box ist
+        sendMessage(js->getCharacter()+ ": " + js->getText(), 50); //Text ausgeben
     }
 
-    //int time = js->getText().length() * 100;
-    bool skip = false;
+    bool skip = false; //Varriable um sleep zu überspringen
     while(true) {
-        js->next();
+        js->next();//Nächsten Text laden
+
         if(!skip) {
             sleep_for(2s);
         }
         skip = false;
 
         cout << endl << endl;
-        if(js->isBox()) {
-            SetConsoleTextAttribute(hConsole, boxcolor);
 
+        if(js->isBox()) { //Abfrage Aktueller Text eine Box ist
+            SetConsoleTextAttribute(hConsole, boxcolor); //Schriftfarbe ändern
 
+            //Box ausgeben
             int slength = js->getText().length();
             cout << "┌─" << sloop("─", slength) << "─┐" << endl;
             cout << "│ " << js->getText() << " │" << endl;
             cout << "└─" << sloop("─", slength) << "─┘";
 
-            SetConsoleTextAttribute(hConsole, maincolor);
-        } else {
-            if(js->getCharacter() == "Player") {
-                SetConsoleTextAttribute(hConsole, 14);
-                sendMessage(js->getText(), 25);
-                SetConsoleTextAttribute(hConsole, maincolor);
+            SetConsoleTextAttribute(hConsole, maincolor); //Schriftfarbe ändern
 
-            } else {
-                sendMessage(js->getCharacter()+ ": " + js->getText(), 50);
+        } else { //Wenn keine Box
+            if(js->getCharacter() == "Player") { //Antwort vom Spieler
+                SetConsoleTextAttribute(hConsole, 14); //Schriftfarbe ändern
+                sendMessage(js->getText(), 25); //Text ausgeben
+                SetConsoleTextAttribute(hConsole, maincolor); //Schriftfarbe ändern
+
+            } else { //Antwort vom Spiel
+                sendMessage(js->getCharacter()+ ": " + js->getText(), 50); //Text ausgeben
 
             }
         }
-        //time = js->getText().length() * 100;
 
-        if(js->isChoise()) {
+        if(js->isChoise()) { //Ist eine Antwort enthalten
             sleep_for(chrono::milliseconds(100));
 
-            jsc->setPoint();
+            jsc->setPoint(); //Consolen Manipulation Punkt setzen
 
-            int menu = 0;
+            int menu = 0; //Variable für Ausgewählte Antwort
+
             while(true) {
-                int csize = js->getChoiseSize();
+                int csize = js->getChoiseSize(); //Anzahl Antworten anfordern
+
                 cout << endl << endl;
-                for(int i=0;i<csize;i++) {
+                for(int i=0;i<csize;i++) //Antworten ausgeben
                     if(menu == i) {
-                        SetConsoleTextAttribute(hConsole, 14);//8
+                        SetConsoleTextAttribute(hConsole, 14); //Farbe setzen
                     } else {
-                        SetConsoleTextAttribute(hConsole, 8);//8
+                        SetConsoleTextAttribute(hConsole, 8); //Farbe setzen
                     }
-                    cout << js->getChoise(to_string(i));
+                    cout << js->getChoise(to_string(i)); //Antworten ausgeben
                     cout << " ";
                 }
 
-                int num = getKey();
-                jsc->removeLine();
+                int num = getKey(); //Tastenanschlag anfordern
+                jsc->removeLine(); //Consolen Manipulation bis zum letzten Punkt löschen
+
+                //Menu Pfeiltasten Selektieren
                 if(num == 75) { //<
                     menu = menu == 0 ? menu = (csize-1) : menu-=1;;
 
@@ -156,12 +168,11 @@ int main() {
                 }
 
             }
-            //SetConsoleTextAttribute(hConsole, 14);
-            //sendMessage(js->getChoise(to_string(menu)), 25);
-            skip = true;
-            js->setChoise(menu);
 
-            SetConsoleTextAttribute(hConsole, maincolor);
+            skip = true; //Da Spielerantwort kein sleep nötig
+            js->setChoise(menu); //Klasse die Antwort liefern um Weg zu bestimmen
+
+            SetConsoleTextAttribute(hConsole, maincolor); //Farbe setzen
 
             continue;
         }
