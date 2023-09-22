@@ -11,8 +11,7 @@ int main() {
     system("chcp 65001 > nul");
     cout << "Test" <<  endl;
 
-
-
+question_menu:
     cout << "Wähle aus folgenden Punkten aus:" << endl;
     cout << "[r] Rechnen mit Tausendern" << endl;
     cout << "[s] Rechnen bis 10000" << endl;
@@ -25,13 +24,14 @@ int main() {
         exit(0);
     } else if(menu != 'r' && menu != 's') {
         cout << "Ungültige Eingabe" << endl;
-        return 1;
+        goto question_menu;
     }
 
     cout << "Wie viele Aufgaben sollen berechnet werden?" << endl;
     int value;
     cin >> value;
 
+question_type:
     cout << "Welche Aufgaben sollen gestellt werden?" << endl;
     cout << "[+] Addition" << endl;
     cout << "[-] Subtraktion" << endl;
@@ -39,8 +39,8 @@ int main() {
     cin >> type;
 
     if(type != '+' && type != '-') {
-        cout << "Ungültige Eingabe" << endl;
-        return 1;
+        cout << "Ungültige Eingabe" << endl << endl;
+        goto question_type;
     }
 
     for(int i=0;i<value;i++) {
@@ -48,7 +48,8 @@ int main() {
         int random2 = getRandom(menu == 's' ? 0 : 1000 , 10000);
         cout << endl << "Aufgabe " << (i + 1) << endl;
         cout << random1 << " " << type << " " << random2 << " = ";
-
+        int check = 0;
+fail:
         int presult;
         cin >> presult;
 
@@ -56,7 +57,12 @@ int main() {
         if(presult ==  result) {
             cout << "Richtig! Das Ergebniss ist: " << result << endl;
         } else {
-            cout << "Falsch! Das Ergebniss ist: " << result << endl;
+            if(++check == 3) {
+                cout << "Falsch! Das Ergebniss ist: " << result << endl;
+            } else {
+                cout << "Versuch es nochmal:";
+                goto fail;
+            }
         }
     }
 
