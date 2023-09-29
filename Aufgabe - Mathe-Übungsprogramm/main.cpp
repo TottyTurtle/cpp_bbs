@@ -7,6 +7,7 @@ int getRandom(int min, int max) {
     return rand()%((max + 1)-min)+min;
 }
 
+
 int main() {
     system("chcp 65001 > nul");
     cout << "Test" <<  endl;
@@ -46,6 +47,7 @@ question_type:
     for(int i=0;i<value;i++) {
         int random1 = getRandom(menu == 's' ? 0 : 1000 , 10000);
         int random2 = getRandom(menu == 's' ? 0 : 1000 , 10000);
+
         cout << endl << "Aufgabe " << (i + 1) << endl;
         cout << random1 << " " << type << " " << random2 << " = ";
         int check = 0;
@@ -65,7 +67,4 @@ fail:
             }
         }
     }
-
-
-
 }
