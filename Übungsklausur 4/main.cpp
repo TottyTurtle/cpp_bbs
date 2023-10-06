@@ -55,21 +55,23 @@ int main() {
             case 'B': {
 
                 fstream file;
+
                 file.open("noten.txt", ios::out);
                 file << "Berechnung der Gesamtnoten:" << endl << endl;
-                for(int i=0;i<64;i++) {
-                    if(user[i] == "") {
-                        break;
-                    }
+                cout << "Berechnung der Gesamtnoten:" << endl << endl;
+                for(int i=0;i<index;i++) {
+
                     double gesnote =  weight_m / 100.0 * note_m[i];
                     gesnote += weight_s / 100.0 * note_s[i];
                     gesnote +=  weight_h / 100.0 * note_h[i];
 
                     file << user[i] << " " << gesnote << endl;
+                    cout << user[i] << " " << gesnote << endl;
                 }
 
 
                 file.close();
+                cout << "Datei wurde erstellt." << endl;
                 break;
             }
             case 'e':
@@ -78,6 +80,7 @@ int main() {
                 break;
             }
             default: {
+                cout << "Ungültige eingabe" << endl;
             }
 
         }

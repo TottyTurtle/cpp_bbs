@@ -1,4 +1,4 @@
 Berechnung der Gesamtnoten:
-2 2.3
-Timmy 3.1
-Gaga 2
+
+Tom 3.4
+Baba 2.4
