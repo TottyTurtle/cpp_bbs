@@ -1,67 +1,96 @@
-
 #include <iostream>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string>
-#include "Rechner.h"
+#include <fstream>
 using namespace std;
 
 
 int main() {
-    while(true) {
 
-invalid:
-        cout << "Gib eine Zahl ein:" << endl;
+    cout << ":::Notenberechnung 1.0:::" << endl << endl;
 
-        int number;
-        cin >> number;
+    char menu;
+    int percent_m = 30,
+        percent_s = 40,
+        percent_l = 30;
 
-        if(cin.fail()) {
-            cin.clear();
-            cin.ignore();
+        string name[64];
+        int note_m[64],
+            note_s[64],
+            note_l[64];
 
-            cerr << "Keine Zahl angegeben!" << endl;
 
-            goto invalid;
+
+        int index =  0;
+
+    do {
+
+        cout << "Menu:" << endl;
+        cout << string(30,'.') << endl;
+        cout << "G -> Gewichtung festlegen" << endl;
+        cout << "S -> Schulnoten eingeben" << endl;
+        cout << "B -> Noten in Datei speichern" << endl;
+        cout << "E -> Programm beenden" << endl;
+        cout << string(30,'.') << endl;
+
+        cin >> menu;
+
+        switch(menu) {
+            case 'G':
+            case 'g':
+                cout << "Geben Sie die Prozente ein fuer Muendlich: ";
+                cin >> percent_m;
+
+                cout << "Geben Sie die Prozente ein fuer Schriftlich: ";
+                cin >> percent_s;
+
+                cout << "Geben Sie die Prozente ein fuer Letze Halbjahr: ";
+                cin >> percent_l;
+
+                break;
+            case 'S':
+            case 's':
+                cout << "Geben Sie den Namen des Schülers ein: ";
+                cin >> name[index];
+
+                cout << "Geben Sie die Muendliche Note ein: ";
+                cin >> note_m[index];
+
+                cout << "Geben Sie die Schriftliche Note ein: ";
+                cin >> note_s[index];
+
+                cout << "Geben Sie die letzte Halbjahr Note ein: ";
+                cin >> note_l[index];
+
+                index = index + 1;
+                break;
+            case 'B':
+            case 'b': {
+                ofstream fout;
+                fout.open("text.txt",ios::out);
+                cout << "Title " <<  endl;
+                fout << "Title " <<  endl;
+                for(int d=0; d<index; d++) {
+
+                    float sum = percent_m / 100.0 * note_m[d];
+                    sum += percent_s / 100.0 * note_s[d];
+                    sum += percent_l / 100.0 * note_l[d];
+
+
+
+                    cout << name[d] << ": " << sum <<  endl;
+                    fout << name[d] << ": " << sum <<  endl;
+                }
+                fout.close();
+
+                break;
+            }
+            case 'E':
+            case 'e':
+                break;
         }
 
-        cout << "Zahl: " << number << " angegeben" << endl;
 
-        cout << string(40, '-') << endl;
+    } while(menu != 'e');
 
-    }
 }
-
-    /*
-    #define startWith(var1, var2) var2.rfind(var1, 0) == 0
-
-    string text = "TestTest";
-
-    if(startWith("Test", text)) {
-        cout << "ok" << endl;
-    }
-
-
-    int num;
-    Rechner r;
-    cout << r.plus(3, 2, 3, 4) << endl;
-
-    cout << r.minus(5, 20, 4, 2, 1, 1);
-*/
-    /*while(true) {
-
-        cout << "Gib eine Zahl an:" << endl;
-        cin >> num;
-
-        if(cin.fail()) {
-            cin.clear();
-            cin.ignore();
-            cerr << "Keine Zahl angegeben" << endl;
-            continue;
-        }
-
-        cout << num << endl;
-    }*/
-
 
 

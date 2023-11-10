@@ -4,13 +4,23 @@ using namespace std;
 
 
 int main() {
+
     system("CHCP 65001 < nul");
 
     cout << ":::NOTENBERECHNUNG 1.0:::" << endl << endl;
+
     char menu;
-    int weight_m = 0, weight_s = 0, weight_h = 0, index = 0;
-    int note_m[64], note_s[64], note_h[64];
+
+    int weight_m = 0,
+        weight_s = 0,
+        weight_h = 0,
+        index = 0,
+        note_m[64],
+        note_s[64],
+        note_h[64];
+
     string user[64];
+
     do {
 
         cout << "..........................." << endl;
