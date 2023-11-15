@@ -4,7 +4,8 @@
 using namespace std;
 
 int main() {
-    cout << "HTMLtables 1.0" << endl << endl;
+
+    cout << "HTMLtables 1.0"  << endl << endl;
 
     cout << "Wie viele Zeilen soll die Tabelle haben?" << endl;
 
@@ -17,7 +18,8 @@ int main() {
     int spalte;
     cin >> spalte;
 
-    ofstream fout;
+    fstream fout;
+    //ofstream fout;
     fout.open("index.html",ios::out);
     fout << "<html>\n\t<header></header>\n\t<body>";
 
@@ -30,6 +32,7 @@ int main() {
         }
         fout << "\n\t\t\t</tr>";
     }
+
 
     fout << "\n\t\t</table>";
     fout << "\n\t</body>\n</html>";
